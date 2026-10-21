@@ -193,6 +193,7 @@
     "&prop=imageinfo&iiprop=url|mime&iiurlwidth=800";
   var SHOW = 2000, GAP = 500, FADE = 600;
   var queue = [];
+  var seen = {}; // every file already queued this visit, so nothing repeats
   var stage = document.getElementById("stage");
 
   function refill() {
@@ -201,6 +202,8 @@
       Object.keys(pages).forEach(function (k) {
         var p = pages[k], ii = p.imageinfo && p.imageinfo[0];
         if (!ii || !/^image\/(jpeg|png|gif|webp)$/.test(ii.mime)) return;
+        if (seen[p.title]) return;
+        seen[p.title] = true;
         queue.push({
           src: ii.thumburl || ii.url,
           title: p.title.replace(/^File:/, "").replace(/\.[a-z0-9]+$/i, "").replace(/_/g, " ")
