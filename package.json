@@ -1,0 +1,24 @@
+{
+  "name": "earth-loading",
+  "version": "1.0.0",
+  "description": "Earth is loading. Random Wikipedia images, forever.",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "dev": "npx serve .",
+    "lint": "echo 'No linting configured'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThatMaxwell/earth-loading.git"
+  },
+  "author": "ThatMaxwell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThatMaxwell/earth-loading/issues"
+  },
+  "homepage": "https://github.com/ThatMaxwell/earth-loading#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
