@@ -93,7 +93,7 @@
     opacity: 0.35;
     transition: opacity 0.3s ease;
   }
-  #logo svg { width: 46px; height: 46px; flex: none; }
+  #logo svg { width: 30px; height: 30px; flex: none; }
   #logo .msg {
     font-family: sans-serif;
     font-size: 15px;
@@ -122,10 +122,32 @@
     100%  { transform: rotate(90deg); }
   }
 
+  /* ---------- top left: music toggle ---------- */
+  #music {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    width: 34px;
+    height: 34px;
+    padding: 6px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: #202122;
+    opacity: 0.35;
+    transition: opacity 0.3s ease;
+  }
+  #music:hover, #music:focus-visible, #music.playing { opacity: 0.9; }
+  #music svg { width: 100%; height: 100%; display: block; }
+  #music .off { stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  #music.playing .off { display: none; }
+  #music.playing svg { animation: bob 1s steps(2, end) infinite; }
+  @keyframes bob { 50% { transform: translateY(-2px); } }
+
   @media (max-width: 560px) {
     #loading img { width: 48px; height: 48px; }
     #loading span { font-size: 30px; }
-    #logo svg { width: 36px; height: 36px; }
+    #logo svg { width: 24px; height: 24px; }
     #logo .msg { font-size: 13px; }
     #logo:hover .msg { max-width: 60vw; white-space: normal; }
   }
@@ -137,6 +159,14 @@
 <body>
 
 <div id="stage"></div>
+
+<button id="music" type="button" aria-label="Play music" aria-pressed="false">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M9 17.5V5l11-2v12.5a2.5 2.5 0 1 1-1.5-2.3V7.1L10.5 8.6v8.9A2.5 2.5 0 1 1 9 15.2z"/>
+    <line class="off" x1="3" y1="3" x2="21" y2="21"/>
+  </svg>
+</button>
+<audio id="song" src="song.mp3" loop preload="none"></audio>
 
 <a id="logo" href="https://github.com/ThatMaxwell" target="_blank" rel="noopener" aria-label="Check out ThatMaxwell's other projects!">
   <svg viewBox="225 225 804 804" aria-hidden="true">
@@ -218,6 +248,21 @@
   }
 
   loop();
+
+  var btn = document.getElementById("music"), song = document.getElementById("song");
+  btn.addEventListener("click", function () {
+    if (song.paused) song.play(); else song.pause();
+  });
+  song.addEventListener("play", function () {
+    btn.classList.add("playing");
+    btn.setAttribute("aria-pressed", "true");
+    btn.setAttribute("aria-label", "Pause music");
+  });
+  song.addEventListener("pause", function () {
+    btn.classList.remove("playing");
+    btn.setAttribute("aria-pressed", "false");
+    btn.setAttribute("aria-label", "Play music");
+  });
 })();
 </script>
 </body>
