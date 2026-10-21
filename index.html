@@ -197,7 +197,10 @@
   var stage = document.getElementById("stage");
 
   function refill() {
-    return fetch(API).then(function (r) { return r.json(); }).then(function (d) {
+    // Commons marks this response cacheable for an hour, so give every request
+    // a unique URL or the browser keeps handing back the same "random" batch
+    var url = API + "&_=" + Date.now() + Math.random().toString(36).slice(2);
+    return fetch(url, { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
       var pages = (d.query && d.query.pages) || {};
       Object.keys(pages).forEach(function (k) {
         var p = pages[k], ii = p.imageinfo && p.imageinfo[0];
